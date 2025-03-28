@@ -1,0 +1,11 @@
+[package]
+name = "swimming-idle-game-terminal"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+crossterm = "0.28.1" # Terminal UI framework
+miette = "7.5.0" # Error Handling
+terminal_size = "0.4.2"  # For getting terminal dimensions
