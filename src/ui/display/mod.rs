@@ -1,5 +1,3 @@
-//! Display module for handling the game UI rendering
-
 mod header;
 mod swimmers;
 mod footer;
@@ -14,6 +12,13 @@ use crossterm::{
     terminal::{Clear, ClearType},
 };
 
+/// Clears the terminal before rendering the UI
+fn clear_terminal() -> Result<()> {
+    let mut stdout = stdout();
+    execute!(stdout, Clear(ClearType::All), cursor::MoveTo(0, 0)).into_diagnostic()?;
+    Ok(())
+}
+
 /// Displays the main game UI with all swimmers and game information
 /// 
 /// # Arguments
@@ -27,11 +32,7 @@ pub fn display_ui(swimmers: &[Swimmer], selected_index: usize, new_swimmer_cost:
     let mut stdout = stdout();
     
     // Ensure the terminal is completely cleared before each redraw
-    execute!(
-        stdout, 
-        Clear(ClearType::All), 
-        cursor::MoveTo(0, 0)
-    ).into_diagnostic()?;
+    clear_terminal()?;
     
     // Hide cursor during rendering
     execute!(stdout, cursor::Hide).into_diagnostic()?;

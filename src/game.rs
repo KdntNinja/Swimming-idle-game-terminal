@@ -15,6 +15,7 @@ pub struct Game {
     selected_index: usize,
     name_data: NameData,
     new_swimmer_cost: usize,
+    last_rendered_swimmer: Option<Swimmer>,
 }
 
 impl Game {
@@ -37,6 +38,7 @@ impl Game {
             selected_index: 0_usize,
             name_data,
             new_swimmer_cost: 25_usize, // Initial cost to add a new swimmer
+            last_rendered_swimmer: None,
         })
     }
 
@@ -108,6 +110,7 @@ impl Game {
             // Only render the UI at fixed intervals
             if now.duration_since(last_render) >= render_duration {
                 ui::display_ui(&self.swimmers, self.selected_index, self.new_swimmer_cost)?;
+                self.last_rendered_swimmer = Some(self.swimmers[self.selected_index].clone());
                 last_render = now;
             }
 
